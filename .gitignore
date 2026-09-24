@@ -1,0 +1,21 @@
+﻿## .NET Build Output
+[Bb]in/
+[Oo]bj/
+*.dll
+*.pdb
+*.exe
+
+## Rider / JetBrains IDE Files
+.idea/
+*.sln.DotSettings.user
+*.csproj.user
+
+## Visual Studio User Files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## OS Files
+.DS_Store
+Thumbs.db
