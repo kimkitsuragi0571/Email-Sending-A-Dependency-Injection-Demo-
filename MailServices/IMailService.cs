@@ -1,6 +1,6 @@
-﻿namespace MailServices;
+namespace MailServices;
 
-public interface IMailServices
+public interface IMailService
 {
     public void SendMail(string to, string title, string body);
 }
