@@ -8,10 +8,12 @@ public class MailService : IMailService
 {
     //添加了对Config和Log项目的引用,所以这里可以直接写接口类成员
     private readonly ILogProvider logProv;
-    private readonly IConfigService configServ;
+    //private readonly IConfigService configServ;这里也记得换成ConfigReader类型
+    private readonly IConfigReader configServ;
     //之后MailService类实例化时,构造函数传入具体实现类ConfigServices和LogProvider变量就行
     //你要是直接传入接口变量肯定报错
-    public MailService(ILogProvider logProv, IConfigService configServ)
+    //public MailService(ILogProvider logProv, IConfigService configServ)这里就不直接简单读取
+    public MailService(ILogProvider logProv, IConfigReader configServ)
     {
         this.logProv = logProv;
         this.configServ = configServ;

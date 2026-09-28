@@ -1,6 +1,6 @@
 using System;
 using ConfigServices;
-using LogServices;
+//using LogServices;使用封装方法后就可以不用引入类库了
 using MailServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -12,12 +12,27 @@ class Program
        Console.WriteLine("项目主入口,开始执行");
 
        ServiceCollection services = new ServiceCollection();
+       
+       //新增注册,先加环境变量然后加ini
+       services.AddScoped<IConfigService, EnvVarConfigService>();
+       //这里新增方法调用
+       services.AddLayeredConfig();
+       
        //这里直接用MailServices就会有命名空间和类冲突(都叫MailServices),这波没写标准
        //紧急改名为MailService
        services.AddScoped<IMailService, MailService>();
        //注意具体实现类必须是public class,不然访问不到
-       services.AddScoped<IConfigService, EnvVarConfigService>();
-       services.AddScoped<ILogProvider, ConsoleLogProvider>();
+       //services.AddScoped<IConfigService, EnvVarConfigService>();----现已废弃改为使用工厂注册
+       // services.AddScoped<IConfigService>((IServiceProvider sp) =>
+       //     {
+       //         return new InitFileConfigService { FilePath = "mail.ini" };
+       //     }
+       // );-----好吧这也可以滚了,改成直接使用封装方法
+       //services.AddScoped<ILogProvider, ConsoleLogProvider>();----现已废弃改为使用封装方法
+       services.AddConsoleLog();
+       
+      
+       
        using (var sp = services.BuildServiceProvider())
        {
            //根对象只能用ServiceLocator(也就是下面这句)
